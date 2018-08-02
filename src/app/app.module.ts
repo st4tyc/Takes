@@ -9,7 +9,12 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Camera } from '@ionic-native/camera';
+import {
+  CameraPreview,
+  CameraPreviewOptions,
+  CameraPreviewPictureOptions
+} from '@ionic-native/camera-preview';
+import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,8 @@ import { Camera } from '@ionic-native/camera';
   ],
   providers: [
     StatusBar,
-    Camera,
+    File,
+    CameraPreview,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

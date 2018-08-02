@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { camera } from '../resource/camera';
+import { TakeAPicture } from '../resource/TakeAPicture';
+import { CameraPreview } from '@ionic-native/camera-preview';
+
 @Component({
   selector: 'page-hello-ionic',
   templateUrl: 'hello-ionic.html'
@@ -9,7 +11,7 @@ export class HelloIonicPage {
 
   }
   takeAPiture(event) {
-    var cam = new camera();
-    cam.take(event);
+    var cam = new TakeAPicture(new CameraPreview);
+    cam.takePicture()        
   };
 }
