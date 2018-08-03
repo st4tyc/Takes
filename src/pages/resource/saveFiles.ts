@@ -15,7 +15,8 @@ export class saveFiles {
       })
       .catch(err => { 
         console.log('Directory doesnt exist');
-        this.file.createDir('cordova.file.applicationDirectory', 'taps', false)
+        console.log(this.pictureDir);
+        this.file.createDir(this.pictureDir, 'taps', false)
         .then(
           (files) => {
             // do something

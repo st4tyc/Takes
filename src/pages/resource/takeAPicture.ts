@@ -23,15 +23,15 @@ export class TakeAPicture {
     quality: 100
   };
 
-  constructor(private cameraPreview: CameraPreview) {}
+  constructor(private cameraPreview: CameraPreview) {console.log('constructor entrou');}
 
-  ionViewDidLoad() {
-    this.startCamera();    
+  ionViewDidLoad() {    
+    this.startCamera();        
   }
 
-  async startCamera() {
+  startCamera() {
     this.picture = null;
-    const result = await this.cameraPreview.startCamera(this.cameraOpts);
+    const result =  this.cameraPreview.startCamera(this.cameraOpts);
     console.log(result);
   }
 
@@ -39,16 +39,18 @@ export class TakeAPicture {
     this.cameraPreview.switchCamera();
   }
 
-  async takePicture() {
-    const result = await this.cameraPreview.takePicture(this.cameraPictureOpts);
-    var save =new saveFiles(new File)
-    var data = new Date()
-    
+  takePicture() {
+    console.log('entrou takePicture');
+    const result = this.cameraPreview.takePicture(this.cameraPictureOpts);
+    var save =new saveFiles(new File);
+    console.log('instanciou save');
+    var data = new Date();    
+    console.log('instanciou date');
     save.createDirectory();    
     this.picture = `data:image/jpeg;base64,${result}`;    
     save.savePhoto(this.picture,data.getDate()+'taps.png');
 
-    await this.cameraPreview.stopCamera();
+    this.cameraPreview.stopCamera();
     
   }
 }
