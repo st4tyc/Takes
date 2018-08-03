@@ -6,8 +6,8 @@ import {
 import { File } from '@ionic-native/file';
 import { saveFiles } from '../resource/saveFiles';
 
-export class TakeAPicture {    
-  picture: string; 
+export class TakeAPicture {
+  picture: string;
 
   cameraOpts: CameraPreviewOptions = {
     x: 0,
@@ -23,15 +23,21 @@ export class TakeAPicture {
     quality: 100
   };
 
-  constructor(private cameraPreview: CameraPreview) {console.log('constructor entrou');}
+  constructor(private cameraPreview: CameraPreview) { console.log('constructor entrou'); }
 
-  ionViewDidLoad() {    
-    this.startCamera();        
+  ionViewDidLoad() {
+    this.startCamera();
   }
 
   startCamera() {
     this.picture = null;
-    const result =  this.cameraPreview.startCamera(this.cameraOpts);
+    const result = this.cameraPreview.startCamera(this.cameraOpts).then(
+      (res) => {
+        console.log(res)
+      },
+      (err) => {
+        console.log(err)
+      });      
     console.log(result);
   }
 
@@ -41,16 +47,23 @@ export class TakeAPicture {
 
   takePicture() {
     console.log('entrou takePicture');
-    const result = this.cameraPreview.takePicture(this.cameraPictureOpts);
-    var save =new saveFiles(new File);
+
+    const result = this.cameraPreview.takePicture(this.cameraPictureOpts).then((imageData) => {
+      this.picture = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      console.log(err);
+      this.picture = 'assets/img/test.jpg';
+    });
+
+    var save = new saveFiles(new File);
     console.log('instanciou save');
-    var data = new Date();    
+    var data = new Date();
     console.log('instanciou date');
-    save.createDirectory();    
-    this.picture = `data:image/jpeg;base64,${result}`;    
-    save.savePhoto(this.picture,data.getDate()+'taps.png');
+    save.createDirectory();
+    this.picture = `data:image/jpeg;base64,${result}`;
+    save.savePhoto(this.picture, data.getDate() + 'taps.png');
 
     this.cameraPreview.stopCamera();
-    
+
   }
 }

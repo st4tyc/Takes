@@ -10,7 +10,7 @@ export class HelloIonicPage {
   constructor() {
 
   }
-  async takeAPiture(event) {
+  takeAPiture(event) {
     var cam = new TakeAPicture(new CameraPreview);
     return cam.takePicture();  
   };
